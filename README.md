@@ -515,7 +515,147 @@ let name = '暴暴'
 
 
 
-## 模块化规范
+## 二、模块化规范
+
+
+
+### 1. 导出模块
+
+创建 **module** 目录，创建 **m1.js**
+
+```js
+export let name = '亚索'
+
+export function r() {
+    console.log("狂风绝息斩");
+}
+```
+
+创建 **m2.js**
+
+```js
+export let name = '永恩'
+
+export function r() {
+    console.log('封尘绝念斩');
+}
+
+// 或者这样导出
+export let name = '永恩'
+
+export function r() {
+    console.log('封尘绝念斩');
+}
+export {star, sing}
+```
+
+
+
+### 2. 导入模块
+
+创建 **demo.html**
+
+```html
+<body>
+    <h1>模块化测试</h1>
+</body>
+<script type='module'>
+    import * as m1 from './m1.js'
+    import * as m2 from './m2.js'
+
+    console.log(m1.name);
+    m1.r()
+
+    console.log(m2.name);
+    m2.r()
+    
+    //还可以这样导入：解构赋值的形式
+    import {name, r} from './m1.js'
+    import {name as name2} from './m2.js' //使用as防止重名
+    console.log(name)
+    r()
+    console.log(name2)
+</script>
+```
+
+
+
+## 三、默认暴露模块
+
+### 1. 默认暴露
+
+创建 **m3.js**
+
+```js
+export default{
+    username : '奥巴马',
+    age : 25,
+    r() {
+        console.log("圣枪洗礼");
+    }
+}
+```
+
+
+
+### 2. 导入模块
+
+在 **demo.html** 中导入模块
+
+```js
+//导入m3
+import m3 from './m3.js'
+console.log(m3)
+```
+
+
+
+## 四、封装代码
+
+### 1. 创建 app.js
+
+```js
+import * as m1 from './m1.js'
+import * as m2 from './m2.js'
+import m3 from './m3.js'
+
+m1.r()
+m2.r()
+m3.r()
+```
+
+
+
+### 2. 引入 app.js
+
+创建 **demo-app.html**，引入 **app.js**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src='m1.js'></script>
+    <script src='m2.js'></script>
+</head>
+<body>
+    <h1>模块化测试</h1>
+</body>
+<script type='module' src='./app.js'>
+</script>
+</html>
+```
+
+运行结果：
+
+```tex
+狂风绝息斩
+封尘绝念斩
+圣枪洗礼
+```
 
 
 
@@ -925,14 +1065,6 @@ methods:{
 ![v-for](./img/v-for.png)
 
 
-
-
-
-## 八、声明周期
-
-
-
-## 综合案例
 
 
 
