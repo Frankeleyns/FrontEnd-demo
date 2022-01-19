@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>axios 案例</title>
+    <script src="axios.js"></script>
+</head>
+<body>
+    <h1>Axios 案例</h1>
+</body>
+
+<script>
+  // 创建一个 axios 对象
+  const request = axios.create({
+    baseURL: 'http://localhost:8082', //url前缀
+    timeout: 1000, //超时时间
+    headers: {'jsessionid': 'frankeleyn'}
+})
+
+// 开启请求拦截器
+request.interceptors.request.use(
+  (config) => {
+    // 正常的请求
+    config.headers.token = "user-frankeleyn"
+    return config
+  },
+  (error) => {
+    // 错误的请求
+    return Promise.reject(error)
+  }
+)
+
+// 返回结果拦截器
+request.interceptors.response.use(
+  (response) => {
+    console.log('返回结果拦截', response.data);
+    return response
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
+
+  // 发送 axios 请求
+  request({
+      method:'get',
+      url:'/user/list'
+  }).then(response => {
+      console.log('获取数据成功：', response.data[0].name)
+  }).catch(error => {
+      console.log('获取数据失败：', error)
+  })
+
+  // es6 写法
+  request.get('/user/list')
+         .then(res => console.log('获取数据成功：' + res.data[1].name))
+         .catch(error => console.log('获取数据失败：' + error))
+</script>
+</html>

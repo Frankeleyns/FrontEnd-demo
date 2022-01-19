@@ -243,3 +243,223 @@ p.then(res => {
 })
 ```
 
+
+
+
+
+# Axios
+
+
+
+## 一、Axios 入门
+
+
+
+### 1. Axios 的 作用
+
+[Axios](http://www.axios-js.com) 是一个基于 promise 的 HTTP 库，可以用在浏览器和 node.js 中。
+
+
+
+### 2. 入门案例
+
+##### ① 添加后端接口
+
+自己建一个可以返回 json 数据的 SpringBoot 项目，指定端口号和地址。
+
+比如，我的地址是：http://localhost:8082/user/list
+
+##### ② 创建文件夹
+
+创建 **03-axios-demo** 文件夹
+
+##### ③ 引入 axios.js
+
+将 **axios.js** 引入 **03-axios-demo** 文件夹
+
+##### ④ 测试
+
+创建 **index.html**
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>axios 案例</title>
+    <script src="axios.js"></script>
+</head>
+<body>
+    <h1>Axios 案例</h1>
+</body>
+
+<script>
+    // 普通写法
+    axios({
+        method: 'get',
+        url: 'http://localhost:8082/user/list',
+    })
+    .then((response) => {
+        console.log('获取数据成功', response)
+    })
+    .catch((error) => {
+        console.log('获取数据失败', error)
+    })
+
+    // ES6 写法
+    axios.get('http://localhost:8082/user/list')
+         .then(res => {
+            console.log('获取数据成功：' + res);
+         })
+         .catch(error => {
+            console.log('获取数据失败：' + error);
+         })
+</script>
+</html>
+```
+
+##### ⑤ 运行
+
+使用 **Open with Live Server**  运行(需要安装 Live Server 插件)，这样使用的就是 node 服务器运行的前端项目。
+
+![运行](./img/A-1-2-5-1.png)
+
+运行之后你就发现，报错了，因为没有**设置跨域** (下文介绍跨域)
+
+![跨域失败](./img/A-1-2-5-2.png)
+
+
+
+## 二、跨域
+
+
+
+###  1. 为什么出现跨域
+
+**跨域** 是因为浏览器的**同源策略**限所导致的。
+
+**同源**（即指在同一个域）就是两个地址具有相同的协议（protocol）、主机（host）和端口号（port）
+
+以下情况都属于跨域：
+
+| **跨域原因** | **示例**                       |
+| :----------- | ------------------------------ |
+| 域名不同     | jd.com 和 taobao.com   |
+| 端口不同     | www.qq.com:81 和 www.qq.com:82 |
+
+http和https也属于跨域。
+
+**同源策略会阻止一个域的 javascript 脚本和另外一个域的内容进行交互**。
+
+我们是从 localhost:5500 端口去访问 localhost:8082 端口，这属于端口不同，跨域了。
+
+
+
+### 2. 解决跨域
+
+① JsonP，利用 js 标签的一个漏洞
+
+② Nginx 反向代理，请求转发，将不跨域的请求转发到跨域请求上
+
+③ Cors, Http 允许跨域
+
+在后台的 controller上添加一个注解 **@CrossOrigin** 就可以了。
+
+
+
+
+
+## 三、自定义配置
+
+
+
+### 1、配置axios实例
+
+可以对axios进行配置，简化代码的编写
+
+```js
+// 创建一个 axios 对象
+const request = axios.create({
+    baseURL: 'http://localhost:8082', //url前缀
+    timeout: 1000, //超时时间
+    headers: {'jsessionid': 'frankeleyn'}
+})
+```
+
+
+
+### 2. 配置请求参数
+
+远程接口的url地址可以修改成相对路径了
+
+```js
+// 发送 axios 请求
+request({
+    method:'get',
+    url:'/user/list'
+}).then(response => {
+    console.log('获取数据成功', response.data[0].name)
+}).catch(error => {
+    console.log('获取数据失败', error)
+})
+
+// es6 写法
+request.get('/user/list')
+    .then(res => console.log('获取数据成功：' + res.data[1].name))
+    .catch(error => console.log('获取数据失败：' + error))
+```
+
+
+
+## 四、拦截器
+
+在请求或响应被 then 或 catch 处理前拦截他们。
+
+在前后端分离的项目中，Session 是不共享的，于是我们就需要在请求到达之前 或 响应之后，拦截请求做一些操作。
+
+
+
+### 1. 请求拦截器
+
+在发送axios请求前，可以拦截请求，对请求做一些处理
+
+```js
+// 开启请求拦截器
+request.interceptors.request.use(
+  (config) => {
+    // 正常的请求
+    config.headers.token = "user-frankeleyn"
+    return config
+  },
+  (error) => {
+    // 错误的请求
+    return Promise.reject(error)
+  }
+)
+```
+
+发送请求时，就会携带这个你自定义的 token
+
+![request interceptors](./img/A-4-1.png)
+
+
+
+### 2. 响应拦截器
+
+在发送完请求，获取到响应后，可以对响应做一些处理，再返回给前端用户
+
+```js
+// 返回结果拦截器
+request.interceptors.response.use(
+  (response) => {
+    console.log('返回结果拦截', response);
+    return response.data
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
+```
+

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>axios 案例</title>
+    <script src="axios.js"></script>
+</head>
+<body>
+    <h1>Axios 案例</h1>
+</body>
+
+<script>
+    // 普通写法
+      axios({
+        url: 'http://localhost:8082/user/list',
+        method: 'get'
+      })
+        .then((response) => {
+          console.log('获取数据成功', response)
+        })
+        .catch((error) => {
+          console.log('获取数据失败', error)
+        })
+
+    // ES6 写法
+    axios.get('http://localhost:8082/user/list')
+         .then(res => {
+            console.log('获取数据成功：' + res);
+         })
+         .catch(error => {
+            console.log('获取数据失败：' + error);
+         })
+</script>
+</html>
