@@ -463,3 +463,83 @@ request.interceptors.response.use(
 )
 ```
 
+
+
+# 模块化
+
+
+
+## 一、简介
+
+js 的模块化就像封装 java 框架一样，在 js 封装的过程叫 **模块化**。
+
+
+
+### 1. 案例
+
+① 创建 **04-module-demo** 目录，创建 **no-module** 目录，创建 **a.js**
+
+```js
+let name = '奥巴马'
+```
+
+② 创建 **b.js**
+
+```js
+let name = '暴暴'
+```
+
+③ 创建 **demo.html**
+
+从这个例子可以看出，**name** 的值的不确定性很大，a和b两个 js 文件中的同名变量互相干扰。
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src='a.js'></script>
+    <script src='b.js'></script>
+</head>
+<body>
+    
+</body>
+<script>
+    console.log(name);
+</script>
+</html>
+```
+
+
+
+## 模块化规范
+
+
+
+
+
+# Vue
+
+
+
+## 一、 简介
+
+xxxx
+
+
+
+##  二、第一个 Vue 应用
+
+创建文件夹 **05-vue**，复制 **vue.js**，创建 **01-hello.html**
+
+
+
+### 1. 引入脚本
+
+
+
+
+

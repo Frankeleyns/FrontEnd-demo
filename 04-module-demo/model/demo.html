@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src='m1.js'></script>
+    <script src='m2.js'></script>
+</head>
+<body>
+    <h1>模块化测试</h1>
+</body>
+<script type='module'>
+    import * as m1 from './m1.js'
+    import * as m2 from './m2.js'
+    import m3 from './m3.js'
+
+    console.log(m1.name);
+    m1.r()
+
+    console.log(m2.name);
+    m2.r()
+
+    console.log(m3);
+    m3.r()
+</script>
+</html>
