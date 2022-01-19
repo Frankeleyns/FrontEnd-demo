@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>bind</title>
+</head>
+<body>
+    <div id="app">
+        <a :href="site" target="_blank">{{company}}</a>
+        <input type="text" :value="company">
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    new Vue({
+        el : "#app",
+        data : {
+            "site" : "https://lol.qq.com/",
+            "company" : "英雄联盟"
+        }
+    })
+</script>
+</html>

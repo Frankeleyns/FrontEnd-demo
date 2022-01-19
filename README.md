@@ -527,11 +527,11 @@ let name = '暴暴'
 
 ## 一、 简介
 
-xxxx
+[Vue](https://cn.vuejs.org/) 是一套用于构建用户界面的**渐进式框架**。与其它大型框架不同的是，Vue 被设计为可以自底向上逐层应用。
 
 
 
-##  二、第一个 Vue 应用
+##  二、起步
 
 创建文件夹 **05-vue**，复制 **vue.js**，创建 **01-hello.html**
 
@@ -539,7 +539,400 @@ xxxx
 
 ### 1. 引入脚本
 
+去网上下载一个 **vue.js**，放入 **05-vue** 目录下，引入
 
+```js
+<script src="vue.js"></script>
+```
+
+### 2. 数据绑定
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hello</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 插值表达式，绑定 vue 中的 data 数据 -->
+        {{message}}
+    </div>
+</body>
+<script>
+    new Vue({
+        // 选择器，选定绑定范围
+        el : '#app',
+        data : {
+            // 注册一个数据对象，用于视图中的数据绑定
+            "message" : "Hello Vue"
+        }
+    })
+</script>
+</html>
+```
+
+**声明式渲染：**Vue.js 的核心是一个允许采用简洁的模板语法来声明式地将数据渲染进 DOM 的系统
+
+```json
+data: {
+    message: 'Hello Vue!'
+}
+```
+
+
+
+
+
+## 三、数据绑定
+
+
+
+### 1. 单向绑定
+
+**① **创建 **02-bind.html**
+
+**② **引入脚本，创建 Vue 对象
+
+```html
+<script src="vue.js"></script>
+<script>
+    new Vue({
+    el: '#app',
+    data: {
+        company: '尚硅谷',
+        site: 'http://www.atguigu.com'
+    }
+})
+</script>
+```
+
+**③ ** 使用数据绑定渲染
+
+```html
+<div id="app">
+    <a v-bind:href="site" target="_blank">{{company}}</a>
+    <input type="text" v-bind:value="company">
+</div>
+```
+
+**v-bind** 简写：
+
+```html
+<div id="app">
+    <a :href="site" target="_blank">{{company}}</a>
+    <input type="text" :value="company">
+</div>
+```
+
+![v-bind](./img/V-vbind.png)
+
+
+
+
+### 2. 双向绑定
+
+**① **创建 **03-model.html**
+
+**② ** 复制 02 的代码重命名为 03
+
+**③ ** 将 **v-bind:value** 改为 **v-model**
+
+```html
+<div id="app">
+    <a :href="site" target="_blank">{{company}}</a>
+    <input type="text" v-model="company">
+</div>
+```
+
+双向数据绑定的作用
+
+- 当数据发生变化的时候，视图也会跟着发生变化
+
+  数据模型发生了改变，会直接显示在页面上
+
+- 当视图发生变化的时候，数据也会跟着同步变化
+
+  用户在页面上的修改，会自动同步到数据模型中去
+
+![v-model](./img/V-vmodel.png)
+
+当我在 2 的文本框修改值的时候，1 也会变成和 2 一样的值，而单向绑定就不会有这个效果。
+
+
+
+
+
+## 四、绑定事件监听
+
+创建 **04-event.html**
+
+使用 **v-on** 进行事件绑定，**v-on:click** 表示处理鼠标点击事件，事件调用的方法定义在 vue 对象声明的 **methods** 节点中
+
+```html
+<body>
+    <div id="app">
+        <button v-on:click="play">玩游戏</button>
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    new Vue({
+        el : "#app",
+        data : {
+            game : "英雄联盟"
+        },
+        methods: {
+            play() {
+                alert('我要玩 ' + this.game)
+            }
+        }
+    })
+</script>
+```
+
+v-on 指令的可简写：
+
+```html
+<button @click="play">玩游戏</button>
+```
+
+![v-on](./img/v-on.png)
+
+
+
+
+
+## 五、计算属性
+
+在实现具体值的时候对该值需要计算的属性叫做 **计算属性**。
+
+创建 **05-calcul.html**
+
+### 1. 模板中使用 js 表达式
+
+```html
+<body>
+    <div id="app">
+        <p>原始值：{{message}}</p>
+
+        <p>反转：{{message.split('').reverse().join('')}}</p>
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    new Vue({
+        el : "#app",
+        data : {
+           "message" : "hello"
+        }
+    })
+</script>
+```
+
+模板表达式非常便利，但是设计它们的初衷是用于简单运算的，复杂的逻辑不太适合放在这里，这时候就需要用到 **计算属性**。
+
+
+
+### 2. 计算属性
+
+计算属性，就是**有计算方法的属性**。
+
+```html
+<body>
+    <div id="app">
+        <p>原始值：{{message}}</p>
+
+        <p>反转：{{reversedMessage}}</p>
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    new Vue({
+        el : "#app",
+        data : {
+           "message" : "hello"
+        },
+        computed: {
+            reversedMessage () {
+                console.log('计算属性')
+                return this.message.split('').reverse().join('')
+            }
+        }
+    })
+</script>
+```
+
+
+
+### 3. 使用方法
+
+```json
+methods:{
+    reversed () {
+        console.log('方法执行')
+        return this.message.split('').reverse().join('')
+    }
+}
+```
+
+```html
+<!-- 调用方法 -->
+<p>反转：{{reversed()}}</p>
+```
+
+
+
+### 计算属性和方法的区别
+
+- ##### 计算属性基于缓存
+
+- ##### 方法总会再次执行
+
+```html
+<!-- 2、使用计算属性 -->
+<p>反转消息: {{ reversedMessage }}</p>
+<!-- 调用两次只执行一次属性的计算 -->
+<p>反转消息: {{ reversedMessage }}</p>
+
+<!-- 3、使用方法 -->
+<p>反转消息: {{ reversed() }}</p>
+<!-- 调用两次执行了两次属性的计算 -->
+<p>反转消息: {{ reversed() }}</p>
+```
+
+
+
+### 计算属性的案例
+
+创建 **06-full-name.html**
+
+```html
+<body>
+    <div id="app">
+        姓: <input placeholder="First Name" v-model="firstName" /><br />
+        名: <input placeholder="Last Name" v-model="lastName" /><br />
+        姓名1(单向): <input placeholder="Full Name1" v-model="fullName1" /><br />
+        姓名2(双向): <input placeholder="Full Name2" v-model="fullName2" /><br />
+    </div>
+</body>
+<script src='vue.js'></script>
+<script>
+    new Vue({
+        el : '#app',
+        data : {
+            "firstName" : "Benjamin",
+            "lastName" : "Franklin"
+        },
+        computed: {
+            fullName1() {
+                console.log('计算 fullName1');
+                return this.firstName + this.lastName
+            },
+
+            fullName2: {
+                get() {
+                        console.log('计算fullName2')
+                        return this.firstName + ' ' + this.lastName
+                },
+                
+                set(value) {
+                    console.log('fullName2 的 setter')
+                    const names = value.split(' ')
+                    this.firstName = names[0]
+                    this.lastName = names[1]
+                }
+            }
+        }
+    })
+</script>
+```
+
+![full-name](./img/full-name.png)
+
+
+
+## 六、条件渲染
+
+创建 **07-if.html**
+
+点击复选框，显示或隐藏协议内容。分别使用 **v-if** 和 **v-show** 实现
+
+```html
+<body>
+    <div id="app">
+        <input type="checkbox" v-model="status"><br>
+        <!-- v-if 实现 -->
+        <p v-if="status">显示</p>
+        <p v-else>不显示</p>
+
+        <!-- v-show 实现 -->
+        <p v-show="status">显示</p>
+        <p v-show="!status">不显示</p>
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    new Vue({
+        el : "#app",
+        data : {
+            "status" : false
+        }
+    })
+</script>
+```
+
+![false](./img/v-if-f.png)
+
+![true](./img/v-if-t.png)
+
+
+
+
+
+## 七、列表渲染
+
+创建 **08-for.html**
+
+```html
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(item, index) in users">
+                {{index + 1}}   姓名: {{item.name}}  年龄: {{item.age}}   技能: {{item.skill}}
+            </li>
+        </ul>
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    new Vue({
+        el : "#app",
+        data : {
+            users : [
+                {name : "亚索", age : 28, skill : "狂风绝息斩"},
+                {name : "永恩", age : 29, skill : "封尘绝念斩"}
+            ]
+        }
+    })
+</script>
+```
+
+![v-for](./img/v-for.png)
+
+
+
+
+
+## 八、声明周期
+
+
+
+## 综合案例
 
 
 

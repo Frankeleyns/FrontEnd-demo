@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>用户名</title>
+</head>
+<body>
+    <div id="app">
+        姓: <input placeholder="First Name" v-model="firstName" /><br />
+        名: <input placeholder="Last Name" v-model="lastName" /><br />
+        姓名1(单向): <input placeholder="Full Name1" v-model="fullName1" /><br />
+        姓名2(双向): <input placeholder="Full Name2" v-model="fullName2" /><br />
+    </div>
+</body>
+<script src='vue.js'></script>
+<script>
+    new Vue({
+        el : '#app',
+        data : {
+            "firstName" : "Benjamin",
+            "lastName" : "Franklin"
+        },
+        computed: {
+            fullName1() {
+                console.log('计算 fullName1');
+                return this.firstName + ' ' + this.lastName
+            },
+
+            fullName2: {
+                get() {
+                        console.log('计算fullName2')
+                        return this.firstName + ' ' + this.lastName
+                },
+                
+                set(value) {
+                    console.log('fullName2 的 setter')
+                    const names = value.split(' ')
+                    this.firstName = names[0]
+                    this.lastName = names[1]
+                }
+            }
+        }
+    })
+</script>
+</html>

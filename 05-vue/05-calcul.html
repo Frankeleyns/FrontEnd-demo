@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>计算属性</title>
+</head>
+<body>
+    <div id="app">
+        <p>原始值：{{message}}</p>
+
+        <p>计算属性：{{reversedMessage}}</p>
+        <p>计算属性：{{reversedMessage}}</p>
+
+        -------------分割线---------------
+        
+        <p>方法反转: {{reversed()}}</p>
+        <p>方法反转: {{reversed()}}</p>
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    new Vue({
+        el : "#app",
+        data : {
+           "message" : "hello"
+        },
+        computed: {
+            reversedMessage () {
+                console.log('计算属性')
+                return this.message.split('').reverse().join('')
+            }
+        },
+        methods : {
+            reversed() {
+                console.log('方法反转')
+                return this.message.split('').reverse().join('')
+            }
+        }
+    })
+</script>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hello</title>
+    <script src="vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <!-- 插值表达式，绑定 vue 中的 data 数据 -->
+        {{message}}
+    </div>
+</body>
+<script>
+    new Vue({
+        // 选择器，选定绑定范围
+        el : '#app',
+        data : {
+            // 注册一个数据对象，用于视图中的数据绑定
+            "message" : "Hello Vue"
+        }
+    })
+</script>
+</html>

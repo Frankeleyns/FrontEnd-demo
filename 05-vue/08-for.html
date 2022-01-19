@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>列表渲染</title>
+</head>
+<body>
+    <div id="app">
+        <ul>
+            <li v-for="(item, index) in users">
+                {{index + 1}}   姓名: {{item.name}}  年龄: {{item.age}}   技能: {{item.skill}}
+            </li>
+        </ul>
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    new Vue({
+        el : "#app",
+        data : {
+            users : [
+                {name : "亚索", age : 28, skill : "狂风绝息斩"},
+                {name : "永恩", age : 29, skill : "封尘绝念斩"}
+            ]
+        }
+    })
+</script>
+</html>
