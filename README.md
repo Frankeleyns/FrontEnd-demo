@@ -841,7 +841,7 @@ v-on 指令的可简写：
 <button @click="play">玩游戏</button>
 ```
 
-![v-on](./img/v-on.png)
+![v-on](./img/V-on.png)
 
 
 
