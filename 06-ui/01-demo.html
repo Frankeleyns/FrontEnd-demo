@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>UI 案例</title>
+    <script src="vue.js"></script>
+    <script src="axios.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <el-table :data="users" stripe border style="width: 100%" >
+                <el-table-column prop="name" label="姓名"></el-table-column>
+                <el-table-column prop="age" label="年龄"></el-table-column>
+                <el-table-column prop="skill" label="技能"></el-table-column>
+        </el-table>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            users: [
+                { name: "亚索", age: 28, skill: "狂风绝息斩" },
+                { name: "永恩", age: 29, skill: "封尘绝念斩" }
+            ]
+        }
+    })
+</script>
+
+</html>

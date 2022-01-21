@@ -1,4 +1,4 @@
-# Node Demo
+# Node.js 入门
 
 创建文件夹 **01-node-demo**
 
@@ -97,8 +97,6 @@ node ./node-server-03.js
 
 # ECMAScript 6
 
-创建文件夹 **02-es6-demo**
-
 
 
 ## 一、介绍
@@ -112,6 +110,8 @@ ES6 和 后端的 Java8 的概念类似。
 
 
 ## 二、基本语法
+
+创建文件夹 **02-es6-demo**
 
 
 
@@ -338,7 +338,7 @@ p.then(res => {
 
 ###  1. 为什么出现跨域
 
-**跨域** 是因为浏览器的**同源策略**限所导致的。
+**跨域** 是因为浏览器的**同源策略**限制所导致的。
 
 **同源**（即指在同一个域）就是两个地址具有相同的协议（protocol）、主机（host）和端口号（port）
 
@@ -933,6 +933,10 @@ methods:{
 
 - ##### 方法总会再次执行
 
+普通方法是一个操作手册，相当于一个说明书
+
+计算属性是针对内存的一次运算，是内存结果出现之前所插入的一段代码
+
 ```html
 <!-- 2、使用计算属性 -->
 <p>反转消息: {{ reversedMessage }}</p>
@@ -944,6 +948,8 @@ methods:{
 <!-- 调用两次执行了两次属性的计算 -->
 <p>反转消息: {{ reversed() }}</p>
 ```
+
+
 
 
 
@@ -1068,3 +1074,217 @@ methods:{
 
 
 
+## 八、生命周期
+
+创建 **09-period.html**
+
+```html
+<body>
+    <div id="app">
+        <h2 id="h2">{{message}}</h2>
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    new Vue({
+        el : "#app",
+        data : {
+            "message" : "谦逊薄弱，就是见识薄弱"
+        },
+        methods: {
+            show() {
+                console.log("show() 函数被调用");
+            }
+        },
+        created() {
+            console.log("created 钩子函数调用");
+            // 可以操作 data 中的数据
+            console.log(this.message);
+            // 可以调用 methods 中的方法
+            this.show(); 
+            // 但是获取不了 dom 节点，因为此时 vue 还没开始渲染        
+            console.log("获取 dom " + document.getElementById("h2").innerText);
+        },
+        mounted() {
+            console.log("mounted 钩子函数被调用");
+            // 此时 vue 已经渲染好了数据，可以获取 dom 节点
+            console.log("获取 dom " + document.getElementById("h2").innerText);
+        }
+    })
+</script>
+```
+
+执行结果：
+![period](./img/v-period.png)
+
+
+
+
+
+
+
+# Vue UI 组件库
+
+
+
+## 一、常见组件库
+
+
+
+### 1、Mint UI
+
+主页：http://mint-ui.github.io/#!/zh-cn
+
+说明：饿了么开源的基于Vue的移动端UI组件库
+
+
+
+### 2、Element-UI
+
+主页：http://element-cn.eleme.io/#/zh-CN
+
+说明：饿了么开源的基于Vue的PC端UI组件库
+
+
+
+## 二、Element-UI 案例
+
+创建文件夹 **06-ui**，创建 **01-demo.html**
+
+
+
+### 1. 引入脚本
+
+```html
+    <script src="vue.js"></script>
+    <script src="axios.js"></script>
+    <!-- 引入样式 -->
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+    <!-- 引入组件库 -->
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+```
+
+
+
+## 2. 渲染数据
+
+```html
+<body>
+    <div id="app">
+        <el-table :data="users" stripe border style="width: 100%" >
+                <el-table-column prop="name" label="姓名"></el-table-column>
+                <el-table-column prop="age" label="年龄"></el-table-column>
+                <el-table-column prop="skill" label="技能"></el-table-column>
+        </el-table>
+    </div>
+</body>
+<script>
+    new Vue({
+        el: "#app",
+        data: {
+            users: [
+                { name: "亚索", age: 28, skill: "狂风绝息斩" },
+                { name: "永恩", age: 29, skill: "封尘绝念斩" }
+            ]
+        }
+    })
+</script>
+```
+
+
+
+运行结果：
+
+![v-ui](./img/v-ui.png)
+
+
+
+
+
+# Vue-Router
+
+
+
+## 一、介绍
+
+Vue.js 路由允许我们通过锚点定义不同的 URL， 达到访问不同的页面的目的，每个页面的内容通过延迟加载渲染出来。
+
+通过 Vue.js 可以实现多视图的**单页Web应用**（single page web application，SPA）
+
+
+
+## 二、路由案例
+
+
+
+### 1. 创建文件夹和文件
+
+创建文件夹 **07-router**，创建 **index.html**
+
+
+
+### 2. 引入 js
+
+```html
+<script src="vue.js"></script>
+<script src="vue-router.js"></script>
+```
+
+
+
+### 3. 编写 html
+
+```html
+<body>
+    <div id="app">
+        <h1>Hello Vue Router!</h1>
+        <p>
+            <!-- <router-link> 默认会被渲染成一个 `<a>` 标签 -->
+            <!-- 通过传入 `to` 属性指定链接. -->
+            <router-link to="/">首页</router-link>
+            <router-link to="/equip">装备列表</router-link>
+            <router-link to="/heor">英雄列表</router-link>
+        </p>
+        <!-- 路由出口 -->
+        <!-- 路由匹配到的组件将渲染在这里 -->
+        <router-view></router-view>
+    </div>
+</body>
+```
+
+
+
+### 4. 编写 js
+
+```html
+<script>
+    // 1. 定义路由组件
+    const welcome = { template: "<div>英雄联盟首页</div>" }
+    const equip = { template: "<div>装备列表<div>" }
+    const hero = {template: "<div>英雄列表</div>" }
+
+    // 2. 定义路由集合
+    const routes = [
+        { path: '/', redirect: '/welcome' }, // 默认的欢迎页面
+        { path: '/welcome', component: welcome },
+        { path: '/equip', component: equip },
+        { path: '/hero', component: hero }
+    ]
+
+    // 3. 创建 router 实例，传入组件
+    const router = new VueRouter({
+        routes // 缩写，相当于 routes: routes
+    })
+
+    // 4. 加载 vue-router
+    new Vue({
+        el: "#app",
+        data: {},
+        router
+    })
+</script>
+```
+
+显示结果：
+
+![router](./img/v-router.png)

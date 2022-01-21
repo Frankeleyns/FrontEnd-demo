@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命周期</title>
+</head>
+<body>
+    <div id="app">
+        <h2 id="h2">{{message}}</h2>
+    </div>
+</body>
+<script src="vue.js"></script>
+<script>
+    new Vue({
+        el : "#app",
+        data : {
+            "message" : "谦逊薄弱，就是见识薄弱"
+        },
+        methods: {
+            show() {
+                console.log("show() 函数被调用");
+            }
+        },
+        created() {
+            console.log("created 钩子函数调用");
+            // 可以操作 data 中的数据
+            console.log(this.message);
+            // 可以调用 methods 中的方法
+            this.show(); 
+            // 但是获取不了 dom 节点，因为此时 vue 还没开始渲染        
+            console.log("获取 dom " + document.getElementById("h2").innerText);
+        },
+        mounted() {
+            console.log("mounted 钩子函数被调用");
+            // 此时 vue 已经渲染好了数据，可以获取 dom 节点
+            console.log("获取 dom " + document.getElementById("h2").innerText);
+        }
+    })
+</script>
+</html>
